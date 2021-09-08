@@ -16,10 +16,10 @@ pthread_cond_t mutex_consume;
 pthread_cond_t mutex_produce;
 int producer_counter,consumer_counter = 0;
 int count=0;
-bool isRunning = true;
+bool ISRUNNING = true;
 
 void* producer(void* param) {
-	while(isRunning)
+	while(ISRUNNING)
 	{	
 		pthread_mutex_lock(&mutex);
 		while(count>=SIZE){
@@ -41,7 +41,7 @@ void* producer(void* param) {
 
 void* consumer(void* param){
 	//Consumer print out bucket
-	while(isRunning){
+	while(ISRUNNING){
 		pthread_mutex_lock(&mutex);
 		while(count<=0){
 			pthread_cond_wait(&mutex_produce,&mutex);
@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
 		}
 	}
 	sleep(RUNTIME);
-	isRunning = false;
+	ISRUNNING = false;
 
 	for (int i = 0; i < THREAD_NUM; i++) {
 		if (pthread_join(producerthread[i], NULL) != 0) {

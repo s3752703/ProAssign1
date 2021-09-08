@@ -8,7 +8,7 @@
 #include <sys/time.h>
 #include <iostream>
 #define SIZE  5
-#define RUNTIME 1
+#define RUNTIME 10
 #define UPPERBOUNDTIME 1.0
 #define LOWERBOUNDTIME 0.1
 
@@ -76,14 +76,14 @@ bool pickFirstFork(int phnum){
         printf("Philosopher %d pick his own fork\n",phnum);
         return success;
     }
-    if(!success){
-        printf("Philosopher %d waiting for his own fork\n",phnum);
-        think(phnum);
-        think_time = RanFloat(UPPERBOUNDTIME,LOWERBOUNDTIME);
-        sleep(think_time);
-        return success;
+
+    printf("Philosopher %d waiting for his own fork\n",phnum);
+    think(phnum);
+    think_time = RanFloat(UPPERBOUNDTIME,LOWERBOUNDTIME);
+    sleep(think_time);
+    return success;
     }
-}
+
 ///////////////////////////////////////////////////////////////
 bool pickSecondFork(int phnum){
     bool success = false;
@@ -95,13 +95,13 @@ bool pickSecondFork(int phnum){
         printf("Philosopher %d pick his second fork from philosopher[%d]\n",phnum,secondForkPosition[phnum]);
         return success;
     }
-    if(!success){
-        printf("Philosopher %d is waiting for his second fork from philosopher[%d]\n",phnum,secondForkPosition[phnum]);
-        think(phnum);
-        think_time = RanFloat(UPPERBOUNDTIME,LOWERBOUNDTIME);
-        sleep(think_time);
-        return success;
-    }
+    
+    printf("Philosopher %d is waiting for his second fork from philosopher[%d]\n",phnum,secondForkPosition[phnum]);
+    think(phnum);
+    think_time = RanFloat(UPPERBOUNDTIME,LOWERBOUNDTIME);
+    sleep(think_time);
+    return success;
+
 }
 ///////////////////////////////////////////////////////////////
 void putFork(int phnum){
@@ -125,4 +125,5 @@ void* philosopher(void * num){
         }
         putFork(phnum); 
     }
+    return EXIT_SUCCESS;
 }
