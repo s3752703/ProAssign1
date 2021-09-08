@@ -36,7 +36,7 @@ void* producer(void* param) {
 		pthread_cond_signal(&mutex_produce);
 		pthread_mutex_unlock(&mutex);
 	}
-
+	return EXIT_SUCCESS;
 }
 
 void* consumer(void* param){
@@ -54,7 +54,7 @@ void* consumer(void* param){
 		pthread_cond_signal(&mutex_consume);
 		pthread_mutex_unlock(&mutex);
 	}
-
+	return EXIT_SUCCESS;
 }
 
 
