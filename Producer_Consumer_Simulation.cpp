@@ -7,6 +7,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <iostream>
+
 #define THREAD_NUM  5
 #define SIZE 10
 #define EMPTY -1
@@ -14,7 +15,6 @@
 int bucket[SIZE];
 pthread_mutex_t mutex;
 sem_t consumed, produced;
-int producer_counter,consumer_counter = 0;
 int count;
 bool ISRUNNING = true;
 
@@ -28,7 +28,6 @@ void* producer(void* param) {
 		int x = rand()%100;
 		//Add to bucket
 		bucket[count] = x;
-		producer_counter++;
 		printf("Thread producerThread[%d] producer value %d in the bucket[%d]\n", (int)(long)param, x, count);
 		count++;
 		pthread_mutex_unlock(&mutex);
@@ -46,7 +45,6 @@ void* consumer(void* param){
 		count--;
 		bucket[count]=EMPTY;
 		printf("Thread consumerThread[%d] consumed value %d in the bucket[%d]\n", (int)(long)param, y, count);
-		consumer_counter++;
 		pthread_mutex_unlock(&mutex);
 		sem_post(&consumed);
 	}
