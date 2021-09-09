@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <pthread.h>
 #include <sys/wait.h>
 #include <sys/time.h>
-#include <iostream>
+#include <stdlib.h>
+#include <pthread.h>
 #include <semaphore.h>
+#include <iostream>
 #define THREAD_NUM  5
 #define SIZE 10
 #define EMPTY -1
-#define RUNTIME 1
+#define RUNTIME 10
 int bucket[SIZE];
 pthread_mutex_t mutex;
 sem_t consumed, produced;
