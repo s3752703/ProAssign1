@@ -1,4 +1,17 @@
 # ProAssign1
-type 'make' to run the simulation
-type './Producer_Consumer_Simulation' to run the producer consumer simulation
-type './DiningPhilosopher_Simulation' to run the dining philosopher simulation
+The instruction for testing the assignment
+## Run
+Type 'make' to run the simulation.
+'''bash
+make
+'''
+
+Type './Producer_Consumer_Simulation' to run the producer consumer simulation.
+'''bash
+./Producer_Consumer_Simulation
+'''
+
+Type './DiningPhilosopher_Simulation' to run the dining philosopher simulation.
+'''bash
+./DiningPhilosopher_Simulation
+'''
