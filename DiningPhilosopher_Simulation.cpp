@@ -8,7 +8,7 @@
 #include <sys/time.h>
 #include <iostream>
 #define SIZE  5
-#define RUNTIME 1
+#define RUNTIME 10
 #define UPPERBOUNDTIME 1.0
 #define LOWERBOUNDTIME 0.1
 bool isRunning = true;
@@ -16,7 +16,6 @@ pthread_mutex_t forks[SIZE];
 pthread_t thread[SIZE];
 int timeEat[SIZE] = {0,0,0,0,0};
 //the function that will be used for this simulation
-
 void* philosopher(void*);
 void eat(int);
 void think(int);
