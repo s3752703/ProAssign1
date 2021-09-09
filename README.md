@@ -2,16 +2,16 @@
 The instruction for testing the assignment
 ## Run
 Type 'make' to run the simulation.
-'''bash
+```bash
 make
-'''
+```
 
 Type './Producer_Consumer_Simulation' to run the producer consumer simulation.
-'''bash
+```bash
 ./Producer_Consumer_Simulation
-'''
+```
 
 Type './DiningPhilosopher_Simulation' to run the dining philosopher simulation.
-'''bash
+```bash
 ./DiningPhilosopher_Simulation
-'''
+```
