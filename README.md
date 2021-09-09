@@ -5,6 +5,10 @@ Type 'make' to run the simulation.
 ```bash
 make
 ```
+Type 'make clean' to destroy the executeable file.
+```bash
+make clean
+```
 
 Type './Producer_Consumer_Simulation' to run the producer consumer simulation.
 ```bash

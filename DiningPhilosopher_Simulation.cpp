@@ -13,7 +13,6 @@
 #define LOWERBOUNDTIME 0.1
 bool isRunning = true;
 pthread_mutex_t forks[SIZE];
-pthread_t thread[SIZE];
 int timeEat[SIZE] = {0,0,0,0,0};
 //the function that will be used for this simulation
 void* philosopher(void*);
@@ -30,6 +29,7 @@ int main(int argc, char** argv){
     
     srand(time(NULL));
     int i,a[5];
+    pthread_t thread[SIZE];
     for(i=0;i<SIZE;i++){
         pthread_mutex_init(&forks[i],NULL);
     }
