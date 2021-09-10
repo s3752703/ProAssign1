@@ -158,3 +158,4 @@ void* philosopher(void * num){
     }
     return EXIT_SUCCESS;
 }
+
