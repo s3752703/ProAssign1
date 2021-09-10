@@ -12,7 +12,7 @@
 
 using namespace std;
 #define SIZE  5
-#define RUNTIME 1
+#define RUNTIME 10
 #define UPPERBOUNDTIME 1.0
 #define LOWERBOUNDTIME 0.1
 #define bufferSize 100
