@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <cstdio>
 #include <time.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -8,16 +9,28 @@
 #include <semaphore.h>
 #include <iostream>
 
+using namespace std;
 #define THREAD_NUM  5
 #define SIZE 10
 #define EMPTY -1
 #define RUNTIME 10
+#define bufferSize 100
+
 int bucket[SIZE];
 pthread_mutex_t mutex;
 sem_t consumed, produced;
 int count;
 bool ISRUNNING = true;
-
+void* producer(void* param);
+void* consumer(void* param);
+void printMsg(const char*,int,const char*,int,int);
+//////////////////////////////////////////////////////////////////////
+void printMsg(const char* type,int p1,const char* action,int value,int p2){
+	char buffer[bufferSize];
+    snprintf(buffer,bufferSize,"Thread %sThread[%d] %s value %d in bucket[%d]\n",type,p1,action,value,p2);
+    cout<<buffer;
+}
+//////////////////////////////////////////////////////////////////////
 void* producer(void* param) {
 	while(ISRUNNING)
 	{	
@@ -28,14 +41,14 @@ void* producer(void* param) {
 		int x = rand()%100;
 		//Add to bucket
 		bucket[count] = x;
-		printf("Thread producerThread[%d] producer value %d in the bucket[%d]\n", (int)(long)param, x, count);
+		printMsg("producer",(int)(long)param,"produce",x,count);
 		count++;
 		pthread_mutex_unlock(&mutex);
 		sem_post(&produced);
 	}
 	return EXIT_SUCCESS;
 }
-
+//////////////////////////////////////////////////////////////////////
 void* consumer(void* param){
 	//Consumer print out bucket
 	while(ISRUNNING){
@@ -44,7 +57,7 @@ void* consumer(void* param){
 		int y = bucket[count-1];
 		count--;
 		bucket[count]=EMPTY;
-		printf("Thread consumerThread[%d] consumed value %d in the bucket[%d]\n", (int)(long)param, y, count);
+		printMsg("consumer",(int)(long)param,"consume",y,count);
 		pthread_mutex_unlock(&mutex);
 		sem_post(&consumed);
 	}
@@ -66,30 +79,22 @@ int main(int argc, char** argv) {
         bucket[i] = EMPTY;
     }
 	for (int i = 0; i < THREAD_NUM; i++) {
-		if (pthread_create(&producerthread[i], NULL, producer, (void*)(long)i)) {
-			perror("Fail to create consumer thread");
-		}
-		if (pthread_create(&consumerthread[i], NULL, consumer, (void*)(long)i)) {
-			perror("Fail to create consumer thread");
-		}
+		pthread_create(&producerthread[i], NULL, producer, (void*)(long)i);
+		pthread_create(&consumerthread[i], NULL, consumer, (void*)(long)i);
+		
 	}
 	sleep(RUNTIME);
 	ISRUNNING = false;
 
 	for (int i = 0; i < THREAD_NUM; i++) {
-		if (pthread_join(producerthread[i], NULL) != 0) {
-			perror("Failed to join thread");
-		}
-		if (pthread_join(consumerthread[i], NULL) != 0) {
-			perror("Failed to join thread");
-			}
-		}
+		pthread_join(producerthread[i], NULL);
+		pthread_join(consumerthread[i], NULL);
 		
-		pthread_mutex_destroy(&mutex);
-		sem_destroy(&consumed);
-		sem_destroy(&produced);
-		printf("Program exit after %d seconds",RUNTIME);
-		return EXIT_SUCCESS;
+	}
+	pthread_mutex_destroy(&mutex);
+	sem_destroy(&consumed);
+	sem_destroy(&produced);
+	return EXIT_SUCCESS;
 	
 	
 }
